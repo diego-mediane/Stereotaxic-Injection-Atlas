@@ -1,0 +1,72 @@
+name: Build atlas and deploy Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7.0.0
+
+      - name: Set up Python
+        uses: actions/setup-python@v6.3.0
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: tools/requirements-atlas.txt
+
+      - name: Install atlas builder
+        run: pip install -r tools/requirements-atlas.txt
+
+      - name: Build Allen CCF 2017 web volumes
+        run: >-
+          python tools/build_atlas_assets.py
+          --official
+          --resolution-um 50
+          --download-dir "${{ runner.temp }}/allen-ccf-source"
+          --overwrite
+
+      - name: Assemble static site
+        run: |
+          mkdir -p _site
+          cp index.html _site/index.html
+          cp -R atlas-data _site/atlas-data
+          touch _site/.nojekyll
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v6.0.0
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v5.0.0
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5.0.0
