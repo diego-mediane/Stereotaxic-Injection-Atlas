@@ -3,10 +3,9 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
 <title>Stereotaxic Injection Atlas | Allen CCFv3</title>
-<meta name="description" content="Interactive Allen CCFv3 stereotaxic injection atlas with 3D structures, voxel-based 2D sections and optional rig-tilt correction.">
+<meta name="description" content="Interactive Allen CCFv3 stereotaxic injection atlas with genuine 2D sections, optional rig-tilt correction and presentation media export.">
 <meta name="author" content="Diego Hassan Mediane">
 <meta name="theme-color" content="#070b13">
-<meta name="description" content="Scientific 3D mouse-brain stereotaxic injection planner with optional rig tilt correction and locally rendered Allen CCF atlas cross-sections.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -142,6 +141,35 @@
   .adjustment-only.disabled{opacity:.48;pointer-events:none}
   @media (max-width:1050px){#atlas2d{width:calc(100vw - 24px);right:12px;top:12px;height:56vh}.atlasGrid{grid-template-columns:1fr 1fr}body.atlas-visible #refs{display:none}}
   @media (max-width:700px){#atlas2d{height:55vh;right:8px;top:8px;width:calc(100vw - 16px)}.atlasGrid{grid-template-columns:1fr;gap:8px}.sliceCanvasWrap{min-height:220px}.atlasFoot{display:none}}
+
+  #exportModal{position:fixed;inset:0;z-index:40;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(2,5,10,.78);backdrop-filter:blur(12px)}
+  #exportModal.open{display:flex}
+  .exportCard{width:min(920px,calc(100vw - 24px));max-height:calc(100vh - 24px);display:flex;flex-direction:column;background:#0d1524;border:1px solid var(--line2);border-radius:18px;box-shadow:0 30px 90px rgba(0,0,0,.7);overflow:hidden}
+  .exportHead{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:17px 18px 14px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(95,214,198,.08),transparent)}
+  .exportHead h2{margin:6px 0 3px;font:600 19px/1.15 var(--disp)}
+  .exportHead p{margin:0;font-size:11px;line-height:1.45;color:var(--muted)}
+  .exportBody{padding:15px 17px 17px;overflow:auto}
+  .exportGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+  .exportGroup{border:1px solid var(--line);border-radius:13px;padding:12px;background:rgba(5,10,19,.5)}
+  .exportGroup.span2{grid-column:span 2}.exportGroup.span3{grid-column:1/-1}
+  .exportGroup h3{margin:0 0 10px;font:600 10px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--accent)}
+  .ef{display:flex;flex-direction:column;gap:5px;margin:9px 0}.ef:first-of-type{margin-top:0}
+  .ef label,.ef .elab{font:600 9px/1.25 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+  select.efield,input.efield{width:100%;border:1px solid var(--line2);border-radius:9px;background:#090f1b;color:var(--ink);padding:9px 10px;font:500 11px var(--disp);outline:none}
+  select.efield:focus,input.efield:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(95,214,198,.12)}
+  input[type=color].efield{height:38px;padding:4px;cursor:pointer}
+  .exportTwo{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+  .viewChecks{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px}
+  .viewChecks label{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:8px;padding:7px 6px;font-size:10px;color:var(--muted);cursor:pointer;background:rgba(255,255,255,.025)}
+  .viewChecks input{accent-color:var(--accent)}
+  .exportHint{font-size:10px;line-height:1.45;color:var(--faint);margin-top:7px}
+  .exportActions{display:flex;align-items:center;gap:9px;margin-top:14px;padding-top:13px;border-top:1px solid var(--line)}
+  .exportActions .btn{width:auto;min-width:140px}.exportActions .primary{background:var(--accent);border-color:var(--accent);color:#06202a}.exportActions .primary:hover{color:#06202a;filter:brightness(1.08)}
+  .exportProgress{flex:1;min-width:160px}.exportProgress .track{height:6px;border-radius:8px;background:rgba(120,150,210,.18);overflow:hidden}.exportProgress .bar{height:100%;width:0;background:var(--accent);transition:width .12s linear}.exportProgress .status{margin-top:6px;font:500 9.5px/1.3 var(--mono);color:var(--muted)}
+  .templateTag{display:inline-flex;align-items:center;gap:6px;margin-top:7px;padding:5px 8px;border-radius:18px;border:1px solid rgba(95,214,198,.28);background:rgba(95,214,198,.08);font:600 9px var(--mono);color:var(--accent)}
+  .templateTag::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 7px var(--accent)}
+  @media(max-width:820px){.exportGrid{grid-template-columns:1fr 1fr}.exportGroup.span3{grid-column:1/-1}.exportGroup.span2{grid-column:span 2}}
+  @media(max-width:580px){#exportModal{padding:7px}.exportCard{max-height:calc(100vh - 14px)}.exportGrid{grid-template-columns:1fr}.exportGroup.span2,.exportGroup.span3{grid-column:1}.exportTwo{grid-template-columns:1fr}.viewChecks{grid-template-columns:repeat(2,1fr)}.exportActions{flex-wrap:wrap}.exportProgress{order:-1;flex-basis:100%}}
 </style></head>
 <body>
 <div id="scene"></div><div class="grain"></div>
@@ -188,6 +216,12 @@
     <section id="s-ref" class="closed"><div class="sx">Reference &amp; view<span class="chev"></span></div><div class="sc">
       <label class="chk"><input type="checkbox" id="showSutures" checked><span>Bregma, lambda &amp; sutures</span></label>
       <div class="sl" style="margin-top:6px"><div class="slabel"><span>Brain opacity</span><b id="vBrainOp">0.13</b></div><input type="range" id="brainOp" min="0.03" max="0.6" step="0.01" value="0.13"></div>
+    </div></section>
+
+
+    <section id="s-export"><div class="sx">Export presentation media<span class="chev"></span></div><div class="sc">
+      <div class="hint">Create a presentation video, animated GIF or PNG using the current targets and selected brain structures.</div>
+      <button class="btn" id="openExport">Export video, GIF or image</button>
     </div></section>
 
     <section id="s-cal" class="closed"><div class="sx">Atlas fit (advanced)<span class="chev"></span></div><div class="sc">
@@ -241,6 +275,58 @@
 <p><strong>Coordinate convention.</strong> Values are millimetres relative to bregma. Left ML is positive and right ML is negative in this application. The CCF-to-stereotaxic registration is approximate and individual brains vary with strain, age, sex, body size, fixation and surgical positioning.</p>
 <p><strong>Intended use.</strong> Planning and visualisation only. Do not treat the displayed region assignment or corrected dial values as a substitute for pilot injections, brain-surface depth checks, post-operative histology or local SOPs.</p>
 </div></details></div>
+
+<div id="exportModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="exportTitle">
+  <div class="exportCard">
+    <div class="exportHead">
+      <div><div class="kick">Presentation export</div><h2 id="exportTitle">Video, GIF and image export</h2><p>Render the selected injection sites with a reproducible camera path, anatomical highlighting and optional repository watermark.</p><span class="templateTag">Labelled injection-site template</span></div>
+      <button class="mini" id="closeExport" aria-label="Close export panel">&times;</button>
+    </div>
+    <div class="exportBody">
+      <div class="exportGrid">
+        <div class="exportGroup">
+          <h3>Output</h3>
+          <div class="ef"><label for="exportFormat">Format</label><select class="efield" id="exportFormat"><option value="video">Video</option><option value="gif">Animated GIF</option><option value="png">PNG image</option></select></div>
+          <div class="ef"><label for="exportResolution">Resolution</label><select class="efield" id="exportResolution"><option value="1920x1080">1920 × 1080</option><option value="1280x720" selected>1280 × 720</option><option value="1440x1080">1440 × 1080</option><option value="1080x1080">1080 × 1080</option></select></div>
+          <div class="exportTwo"><div class="ef"><label for="exportDuration">Duration (s)</label><input class="efield" id="exportDuration" type="number" min="2" max="20" step="1" value="7"></div><div class="ef"><label for="exportFps">Frame rate</label><select class="efield" id="exportFps"><option>12</option><option>15</option><option>20</option><option>24</option><option selected>30</option></select></div></div>
+          <div class="exportHint">GIF output is automatically limited to a practical size and frame rate.</div>
+        </div>
+        <div class="exportGroup">
+          <h3>Appearance</h3>
+          <div class="ef"><label for="exportBg">Background colour</label><input class="efield" id="exportBg" type="color" value="#070b13"></div>
+          <div class="ef"><span class="elab">Whole-brain opacity <b id="exportBrainOpVal">0.13</b></span><input id="exportBrainOp" type="range" min="0.03" max="0.6" step="0.01" value="0.13"></div>
+          <div class="ef"><span class="elab">Highlighted-region opacity <b id="exportRegionOpVal">0.62</b></span><input id="exportRegionOp" type="range" min="0.08" max="1" step="0.02" value="0.62"></div>
+          <label class="chk"><input type="checkbox" id="exportAutoRegion" checked><span>Highlight the selected target structure</span></label>
+          <label class="chk"><input type="checkbox" id="exportOtherRegions"><span>Include other visible structures</span></label>
+        </div>
+        <div class="exportGroup">
+          <h3>Camera path</h3>
+          <div class="ef"><label for="exportPath">Template</label><select class="efield" id="exportPath"><option value="presentation" selected>Presentation sweep</option><option value="orbit">Full orbit</option><option value="custom">Custom views</option><option value="current">Current view</option></select></div>
+          <label class="chk"><input type="checkbox" id="exportFocus" checked><span>Centre towards the selected target</span></label>
+          <div class="viewChecks" id="exportViews"><label><input type="checkbox" value="home" checked>Oblique</label><label><input type="checkbox" value="left" checked>Left</label><label><input type="checkbox" value="top" checked>Top</label><label><input type="checkbox" value="right" checked>Right</label><label><input type="checkbox" value="front" checked>Front</label><label><input type="checkbox" value="back">Back</label></div>
+          <div class="exportHint">Custom view order follows the sequence shown above.</div>
+        </div>
+        <div class="exportGroup span2">
+          <h3>Caption and watermark</h3>
+          <div class="exportTwo"><div><label class="chk"><input type="checkbox" id="exportCaption" checked><span>Show target, coordinates and region</span></label><label class="chk"><input type="checkbox" id="exportSceneLabels" checked><span>Show labels beside injection tips</span></label></div><div><label class="chk"><input type="checkbox" id="exportWatermark" checked><span>Add repository watermark</span></label><label class="chk"><input type="checkbox" id="exportAxes"><span>Show reference axes</span></label></div></div>
+          <div class="ef"><label for="exportWatermarkText">Watermark text</label><input class="efield" id="exportWatermarkText" value="github.com/diego-mediane/Stereotaxic-Injection-Atlas"></div>
+          <div class="exportTwo"><div class="ef"><label for="exportWatermarkPos">Position</label><select class="efield" id="exportWatermarkPos"><option value="br" selected>Bottom right</option><option value="bl">Bottom left</option><option value="tr">Top right</option><option value="tl">Top left</option></select></div><div class="ef"><span class="elab">Watermark opacity <b id="exportWatermarkOpVal">0.72</b></span><input id="exportWatermarkOp" type="range" min="0.15" max="1" step="0.05" value="0.72"></div></div>
+        </div>
+        <div class="exportGroup">
+          <h3>Selected target</h3>
+          <div id="exportTargetSummary" class="exportHint">Target information will appear here.</div>
+          <button class="btn" id="exportApplyTemplate" style="margin-top:10px">Restore presentation defaults</button>
+        </div>
+      </div>
+      <div class="exportActions">
+        <div class="exportProgress"><div class="track"><div class="bar" id="exportProgressBar"></div></div><div class="status" id="exportStatus">Ready.</div></div>
+        <button class="btn" id="cancelExport" disabled>Cancel</button>
+        <button class="btn primary" id="startExport">Create export</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div id="loading"><div class="ring"></div><div class="t">building brain mesh&hellip;</div></div>
 <script>
 
@@ -351,7 +437,7 @@ function insideMesh(P,mesh){let votes=0;for(let i=0;i<RAYS.length;i++){_rc.set(P
 function regionAt(P){const c=calPos();const lx=P.x-c.x,ly=P.y-c.y,lz=P.z-c.z;let best=null,bestV=Infinity;
   for(const id in regBB){const b=regBB[id];if(lx<b.min.x||lx>b.max.x||ly<b.min.y||ly>b.max.y||lz<b.min.z||lz>b.max.z)continue;
     if(insideMesh(P,pickMesh[id])){if(regVol[id]<bestV){bestV=regVol[id];best=RG.regions[id];}}}
-  return best?{acr:best.acr,name:best.name}:null;}
+  return best?{id:Object.keys(RG.regions).find(function(k){return RG.regions[k]===best;}),acr:best.acr,name:best.name}:null;}
 
 
 function clampInt(value,min,max){return Math.max(min,Math.min(max,Math.round(value)));}
@@ -476,7 +562,7 @@ function viz(){
     const ch=top.y-P.y;const cyl=new THREE.Mesh(new THREE.CylinderGeometry(.033,.033,ch,10),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:.3}));cyl.position.set(P.x,(top.y+P.y)/2,P.z);tGroup.add(cyl);
     const glow=new THREE.Mesh(new THREE.SphereGeometry(.32,18,18),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:.22,depthWrite:false}));glow.position.copy(P);glow.renderOrder=3;tGroup.add(glow);
     const core=new THREE.Mesh(new THREE.SphereGeometry(.17,22,22),new THREE.MeshBasicMaterial({color:col}));core.position.copy(P);core.renderOrder=4;tGroup.add(core);
-    if(t.site){const lb=makeLabel(t.site,'#eef3ff',30);lb.position.set(P.x+.7,P.y+.5,P.z);lb.scale.set(2.4,1.1,1);lb.renderOrder=5;tGroup.add(lb);}
+    if(t.site){const lb=makeLabel(t.site,'#eef3ff',30);lb.position.set(P.x+.7,P.y+.5,P.z);lb.scale.set(2.4,1.1,1);lb.renderOrder=5;lb.userData.isTargetLabel=true;tGroup.add(lb);}
     if(showG&&RR){const tv=vML(ap,ml,dv);const gh=mvec(matT(RR.R),tv);const G=new THREE.Vector3(-gh[0],gh[2],-gh[1]);
       if(G.distanceTo(P)>0.02){
         const gtop=new THREE.Vector3(G.x,Math.max(.6,G.y)+4,G.z);
@@ -604,6 +690,42 @@ cel.addEventListener('touchstart',function(e){touchN=e.touches.length;if(touchN=
 cel.addEventListener('touchmove',function(e){touchN=e.touches.length;if(touchN===2){e.preventDefault();const d=dist(e.touches),m=mid2(e.touches);if(pd){radius*=pd/d;radius=Math.max(5,Math.min(80,radius));radT=radius;}pan(m.x-pm.x,m.y-pm.y);pd=d;pm=m;cam();}},{passive:false});
 cel.addEventListener('touchend',function(e){touchN=e.touches.length;if(touchN<2){pd=0;pm=null;}});
 document.querySelectorAll('.vbtn').forEach(function(b){b.addEventListener('click',function(){goTo(b.dataset.v);});});
+
+let exportCancelled=false;
+let exportWorkerBlobUrl=null;
+let exportActiveRecorder=null;
+let exportActiveGif=null;
+function exportSleep(ms){return new Promise(function(resolve){setTimeout(resolve,ms);});}
+function exportClamp(v,a,b){return Math.max(a,Math.min(b,v));}
+function exportEase(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;}
+function exportSafeName(value){return String(value||'injection').trim().replace(/[^a-z0-9_-]+/gi,'-').replace(/^-+|-+$/g,'')||'injection';}
+function exportDownload(blob,name){const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u);},4000);}
+function exportSetProgress(value,text){document.getElementById('exportProgressBar').style.width=(exportClamp(value,0,1)*100).toFixed(1)+'%';if(text)document.getElementById('exportStatus').textContent=text;}
+function exportSelectedTarget(){const t=targets[selected];if(!t||t.ap===''||t.ml===''||t.dv===''||[+t.ap,+t.ml,+t.dv].some(isNaN))return null;return {site:t.site||'Target',ap:+t.ap,ml:+t.ml,dv:+t.dv};}
+function exportTargetInfo(){const t=exportSelectedTarget(),el=document.getElementById('exportTargetSummary');if(!t){el.textContent='Enter valid AP, ML and DV coordinates before exporting.';return;}let loc=null;try{loc=regionAt(new THREE.Vector3(-t.ml,t.dv,-t.ap));}catch(e){}el.innerHTML='<strong style="color:var(--ink)">'+t.site+'</strong><br>AP '+t.ap.toFixed(2)+' · ML '+t.ml.toFixed(2)+' · DV '+t.dv.toFixed(2)+' mm<br>'+(loc?(loc.acr+' · '+loc.name):'No listed structure at the target tip');}
+function exportDefaults(){document.getElementById('exportFormat').value='video';document.getElementById('exportResolution').value='1280x720';document.getElementById('exportDuration').value='7';document.getElementById('exportFps').value='30';document.getElementById('exportBg').value='#070b13';document.getElementById('exportBrainOp').value='0.13';document.getElementById('exportRegionOp').value='0.62';document.getElementById('exportAutoRegion').checked=true;document.getElementById('exportOtherRegions').checked=false;document.getElementById('exportPath').value='presentation';document.getElementById('exportFocus').checked=true;document.getElementById('exportCaption').checked=true;document.getElementById('exportSceneLabels').checked=true;document.getElementById('exportWatermark').checked=true;document.getElementById('exportAxes').checked=false;document.getElementById('exportWatermarkText').value='github.com/diego-mediane/Stereotaxic-Injection-Atlas';document.getElementById('exportWatermarkPos').value='br';document.getElementById('exportWatermarkOp').value='0.72';document.querySelectorAll('#exportViews input').forEach(function(x){x.checked=['home','left','top','right','front'].indexOf(x.value)>=0;});exportSyncLabels();}
+function exportSyncLabels(){document.getElementById('exportBrainOpVal').textContent=Number(document.getElementById('exportBrainOp').value).toFixed(2);document.getElementById('exportRegionOpVal').textContent=Number(document.getElementById('exportRegionOp').value).toFixed(2);document.getElementById('exportWatermarkOpVal').textContent=Number(document.getElementById('exportWatermarkOp').value).toFixed(2);}
+function exportReadSettings(){let wh=document.getElementById('exportResolution').value.split('x').map(Number),format=document.getElementById('exportFormat').value,fps=Number(document.getElementById('exportFps').value),duration=Number(document.getElementById('exportDuration').value);if(format==='gif'){const scale=Math.min(1,960/wh[0],720/wh[1]);wh=[Math.round(wh[0]*scale),Math.round(wh[1]*scale)];fps=Math.min(fps,12);duration=Math.min(duration,8);}const custom=Array.from(document.querySelectorAll('#exportViews input:checked')).map(function(x){return x.value;});return {format:format,width:wh[0],height:wh[1],fps:exportClamp(fps,1,60),duration:exportClamp(duration,1,30),background:document.getElementById('exportBg').value,brainOpacity:Number(document.getElementById('exportBrainOp').value),regionOpacity:Number(document.getElementById('exportRegionOp').value),autoRegion:document.getElementById('exportAutoRegion').checked,otherRegions:document.getElementById('exportOtherRegions').checked,path:document.getElementById('exportPath').value,focus:document.getElementById('exportFocus').checked,customViews:custom.length?custom:['home'],caption:document.getElementById('exportCaption').checked,sceneLabels:document.getElementById('exportSceneLabels').checked,watermark:document.getElementById('exportWatermark').checked,watermarkText:document.getElementById('exportWatermarkText').value.trim(),watermarkPos:document.getElementById('exportWatermarkPos').value,watermarkOpacity:Number(document.getElementById('exportWatermarkOp').value),showAxes:document.getElementById('exportAxes').checked};}
+function exportFocusPoint(settings,target){const base=camTarget.clone();if(!settings.focus||!target)return base;const p=new THREE.Vector3(-target.ml,target.dv,-target.ap);return base.lerp(p,.46);}
+function exportShortest(a,b){return a+Math.atan2(Math.sin(b-a),Math.cos(b-a));}
+function exportPose(settings,t){if(settings.path==='orbit')return {az:az+Math.PI*2*t,pol:Math.max(.45,Math.min(1.45,pol)),radius:radius};if(settings.path==='current')return {az:az,pol:pol,radius:radius};let names=settings.path==='custom'?settings.customViews:['home','left','top','right','front','home'];if(names.length===1){const d=VIEWS[names[0]]||VIEWS.home;return {az:d[0],pol:d[1],radius:d[2]};}const seg=(names.length-1)*exportClamp(t,0,.999999),i=Math.floor(seg),u=exportEase(seg-i),a=VIEWS[names[i]]||VIEWS.home,b=VIEWS[names[i+1]]||VIEWS.home;return {az:exportShortest(a[0],b[0])*u+a[0]*(1-u),pol:a[1]+(b[1]-a[1])*u,radius:a[2]+(b[2]-a[2])*u};}
+function exportDrawRounded(ctx,x,y,w,h,r){r=Math.min(r,w/2,h/2);ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+function exportOverlay(ctx,settings,target,loc){const w=ctx.canvas.width,h=ctx.canvas.height,unit=Math.max(1,w/1280);ctx.save();if(settings.caption&&target){const title=target.site,detail='AP '+target.ap.toFixed(2)+'  ML '+target.ml.toFixed(2)+'  DV '+target.dv.toFixed(2)+' mm'+(loc?'  ·  '+loc.acr+'  '+loc.name:'');ctx.font='600 '+Math.round(22*unit)+'px Sora, Arial, sans-serif';const tw=Math.max(ctx.measureText(title).width,ctx.measureText(detail).width)+34*unit;exportDrawRounded(ctx,24*unit,24*unit,Math.min(tw,w-48*unit),76*unit,12*unit);ctx.fillStyle='rgba(5,10,19,.72)';ctx.fill();ctx.strokeStyle='rgba(150,178,235,.25)';ctx.lineWidth=1*unit;ctx.stroke();ctx.fillStyle='#eef3ff';ctx.textBaseline='top';ctx.fillText(title,40*unit,36*unit);ctx.font='500 '+Math.round(12*unit)+'px JetBrains Mono, monospace';ctx.fillStyle='#9fb0d6';ctx.fillText(detail,40*unit,66*unit);}if(settings.watermark&&settings.watermarkText){ctx.font='600 '+Math.round(12*unit)+'px JetBrains Mono, monospace';const pad=14*unit,boxH=34*unit,boxW=Math.min(w-32*unit,ctx.measureText(settings.watermarkText).width+pad*2);let x=18*unit,y=h-boxH-18*unit;if(settings.watermarkPos.indexOf('r')>=0)x=w-boxW-18*unit;if(settings.watermarkPos.indexOf('t')>=0)y=18*unit;ctx.globalAlpha=settings.watermarkOpacity;exportDrawRounded(ctx,x,y,boxW,boxH,9*unit);ctx.fillStyle='rgba(5,10,19,.72)';ctx.fill();ctx.strokeStyle='rgba(95,214,198,.45)';ctx.stroke();ctx.fillStyle='#b9f4eb';ctx.textBaseline='middle';ctx.fillText(settings.watermarkText,x+pad,y+boxH/2);ctx.globalAlpha=1;}ctx.restore();}
+function exportCaptureState(settings,target){const state={brainOpacity:brainMat.opacity,axesVisible:axes.visible,region:{},labels:[]};for(const id in regMeshes){const m=regMeshes[id];state.region[id]={visible:m.visible,opacity:m.material.opacity};if(!settings.otherRegions)m.visible=false;}if(settings.autoRegion&&target){let loc=null;try{loc=regionAt(new THREE.Vector3(-target.ml,target.dv,-target.ap));}catch(e){}if(loc&&loc.id){toggleRegion(loc.id,true);if(!state.region[loc.id])state.region[loc.id]={visible:false,opacity:regMeshes[loc.id].material.opacity};}}for(const id in regMeshes){if(regMeshes[id].visible)regMeshes[id].material.opacity=settings.regionOpacity;}brainMat.opacity=settings.brainOpacity;axes.visible=settings.showAxes;tGroup.traverse(function(o){if(o.userData&&o.userData.isTargetLabel){state.labels.push({o:o,visible:o.visible});o.visible=settings.sceneLabels;}});return state;}
+function exportRestoreState(state){brainMat.opacity=state.brainOpacity;axes.visible=state.axesVisible;for(const id in regMeshes){if(state.region[id]){regMeshes[id].visible=state.region[id].visible;regMeshes[id].material.opacity=state.region[id].opacity;}else regMeshes[id].visible=false;}state.labels.forEach(function(x){x.o.visible=x.visible;});}
+function exportFrameFactory(settings,target){const c=document.createElement('canvas');c.width=settings.width;c.height=settings.height;const ctx=c.getContext('2d',{alpha:false});const er=new THREE.WebGLRenderer({antialias:true,alpha:true,preserveDrawingBuffer:true});er.setPixelRatio(1);er.setSize(settings.width,settings.height,false);er.setClearColor(0x000000,0);const ec=camera.clone();ec.aspect=settings.width/settings.height;ec.updateProjectionMatrix();const focus=exportFocusPoint(settings,target);let loc=null;if(target){try{loc=regionAt(new THREE.Vector3(-target.ml,target.dv,-target.ap));}catch(e){}}return {canvas:c,ctx:ctx,renderer:er,camera:ec,focus:focus,loc:loc,render:function(t){const pose=exportPose(settings,t);ec.position.set(focus.x+pose.radius*Math.sin(pose.pol)*Math.sin(pose.az),focus.y+pose.radius*Math.cos(pose.pol),focus.z+pose.radius*Math.sin(pose.pol)*Math.cos(pose.az));ec.lookAt(focus);er.render(scene,ec);ctx.fillStyle=settings.background;ctx.fillRect(0,0,c.width,c.height);ctx.drawImage(er.domElement,0,0,c.width,c.height);exportOverlay(ctx,settings,target,loc);},dispose:function(){er.dispose();}};}
+function exportVideoType(){const safari=/^((?!chrome|android).)*safari/i.test(navigator.userAgent),types=safari?['video/mp4;codecs=avc1.42E01E','video/mp4','video/webm;codecs=vp9','video/webm']:['video/webm;codecs=vp9','video/webm;codecs=vp8','video/webm','video/mp4;codecs=avc1.42E01E','video/mp4'];for(let i=0;i<types.length;i++)if(window.MediaRecorder&&MediaRecorder.isTypeSupported(types[i]))return types[i];return '';}
+async function exportVideo(settings,target,factory){if(!factory.canvas.captureStream||!window.MediaRecorder)throw new Error('Video recording is not supported by this browser. Use GIF or PNG instead.');const mime=exportVideoType(),stream=factory.canvas.captureStream(settings.fps),chunks=[],rec=new MediaRecorder(stream,mime?{mimeType:mime,videoBitsPerSecond:settings.width>=1900?12000000:7000000}:undefined);exportActiveRecorder=rec;const done=new Promise(function(resolve,reject){rec.ondataavailable=function(e){if(e.data&&e.data.size)chunks.push(e.data);};rec.onerror=function(e){reject(e.error||new Error('Video recording failed.'));};rec.onstop=resolve;});rec.start();const frames=Math.max(2,Math.round(settings.duration*settings.fps));for(let i=0;i<frames;i++){if(exportCancelled)break;factory.render(i/(frames-1));exportSetProgress((i+1)/frames,'Recording frame '+(i+1)+' of '+frames+'…');await exportSleep(1000/settings.fps);}if(rec.state!=='inactive')rec.stop();await done;exportActiveRecorder=null;stream.getTracks().forEach(function(t){t.stop();});if(exportCancelled)throw new Error('Export cancelled.');const type=mime||rec.mimeType||'video/webm',ext=type.indexOf('mp4')>=0?'mp4':'webm';exportDownload(new Blob(chunks,{type:type}),exportSafeName(target&&target.site)+'-stereotaxic-atlas.'+ext);}
+async function exportLoadScript(src){return new Promise(function(resolve,reject){const sc=document.createElement('script');sc.src=src;sc.onload=resolve;sc.onerror=reject;document.head.appendChild(sc);});}
+async function exportEnsureGif(){if(window.GIF)return;try{await exportLoadScript('assets/gif.js');}catch(e){await exportLoadScript('https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.js');}if(!window.GIF)throw new Error('GIF encoder could not be loaded.');}
+async function exportGifWorker(){try{const r=await fetch('assets/gif.worker.js',{cache:'force-cache'});if(r.ok)return 'assets/gif.worker.js';}catch(e){}if(exportWorkerBlobUrl)return exportWorkerBlobUrl;const r=await fetch('https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.worker.js');if(!r.ok)throw new Error('GIF worker could not be loaded.');exportWorkerBlobUrl=URL.createObjectURL(new Blob([await r.text()],{type:'application/javascript'}));return exportWorkerBlobUrl;}
+async function exportGif(settings,target,factory){await exportEnsureGif();const worker=await exportGifWorker(),gif=new GIF({workers:2,quality:10,width:settings.width,height:settings.height,workerScript:worker,repeat:0,dither:'FloydSteinberg-serpentine'});exportActiveGif=gif;const frames=Math.max(2,Math.round(settings.duration*settings.fps));for(let i=0;i<frames;i++){if(exportCancelled)throw new Error('Export cancelled.');factory.render(i/(frames-1));gif.addFrame(factory.ctx,{copy:true,delay:Math.round(1000/settings.fps)});exportSetProgress((i+1)/frames*.62,'Preparing GIF frame '+(i+1)+' of '+frames+'…');await exportSleep(0);}const blob=await new Promise(function(resolve,reject){gif.on('progress',function(p){exportSetProgress(.62+p*.38,'Encoding animated GIF…');});gif.on('finished',resolve);gif.on('abort',function(){reject(new Error('Export cancelled.'));});try{gif.render();}catch(e){reject(e);}});exportActiveGif=null;if(exportCancelled)throw new Error('Export cancelled.');exportDownload(blob,exportSafeName(target&&target.site)+'-stereotaxic-atlas.gif');}
+async function exportPng(settings,target,factory){factory.render(0);exportSetProgress(.8,'Encoding PNG image…');const blob=await new Promise(function(resolve){factory.canvas.toBlob(resolve,'image/png');});if(!blob)throw new Error('PNG encoding failed.');exportDownload(blob,exportSafeName(target&&target.site)+'-stereotaxic-atlas.png');}
+async function exportStart(){const target=exportSelectedTarget();if(!target){exportSetProgress(0,'Enter valid coordinates before exporting.');return;}const settings=exportReadSettings(),button=document.getElementById('startExport'),cancel=document.getElementById('cancelExport');exportCancelled=false;button.disabled=true;cancel.disabled=false;exportSetProgress(0,'Preparing export…');const state=exportCaptureState(settings,target),factory=exportFrameFactory(settings,target);try{if(settings.format==='video')await exportVideo(settings,target,factory);else if(settings.format==='gif')await exportGif(settings,target,factory);else await exportPng(settings,target,factory);exportSetProgress(1,'Export created and downloaded.');}catch(e){exportSetProgress(0,e&&e.message?e.message:String(e));}finally{factory.dispose();exportRestoreState(state);exportActiveRecorder=null;exportActiveGif=null;button.disabled=false;cancel.disabled=true;exportCancelled=false;}}
+function exportOpen(){document.getElementById('exportModal').classList.add('open');document.getElementById('exportModal').setAttribute('aria-hidden','false');exportTargetInfo();exportSyncLabels();}
+function exportClose(){if(!document.getElementById('startExport').disabled){document.getElementById('exportModal').classList.remove('open');document.getElementById('exportModal').setAttribute('aria-hidden','true');}}
+document.getElementById('openExport').addEventListener('click',exportOpen);document.getElementById('closeExport').addEventListener('click',exportClose);document.getElementById('startExport').addEventListener('click',exportStart);document.getElementById('cancelExport').addEventListener('click',function(){exportCancelled=true;if(exportActiveGif&&exportActiveGif.running)try{exportActiveGif.abort();}catch(e){}if(exportActiveRecorder&&exportActiveRecorder.state!=='inactive')try{exportActiveRecorder.stop();}catch(e){}exportSetProgress(0,'Cancelling…');});document.getElementById('exportApplyTemplate').addEventListener('click',exportDefaults);['exportBrainOp','exportRegionOp','exportWatermarkOp'].forEach(function(id){document.getElementById(id).addEventListener('input',exportSyncLabels);});document.getElementById('exportModal').addEventListener('click',function(e){if(e.target===e.currentTarget)exportClose();});document.addEventListener('keydown',function(e){if(e.key==='Escape')exportClose();});exportDefaults();
+
 (function loop(){requestAnimationFrame(loop);
   if(tweening){var da=azT-az;da=Math.atan2(Math.sin(da),Math.cos(da));az+=da*0.18;pol+=(polT-pol)*0.18;radius+=(radT-radius)*0.18;
     if(Math.abs(da)<0.002&&Math.abs(polT-pol)<0.002&&Math.abs(radT-radius)<0.01){az=azT;pol=polT;radius=radT;tweening=false;}cam();}

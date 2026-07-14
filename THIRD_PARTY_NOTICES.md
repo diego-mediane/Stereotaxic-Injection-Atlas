@@ -18,6 +18,12 @@ Steinmetz N. Modified Allen CCF 2017 for cortex-lab/allenCCF. Figshare. doi:10.6
 
 The browser application loads Three.js r128 from cdnjs. Three.js is distributed under the MIT Licence.
 
+## gif.js
+
+Animated GIF export uses gif.js 0.2.0 by Johan Nordberg. The deployment workflow downloads the browser library and worker from jsDelivr. gif.js is distributed under the MIT Licence.
+
+Repository: https://github.com/jnordberg/gif.js
+
 ## Google Fonts
 
 The interface uses Sora and JetBrains Mono through Google Fonts. Each font remains subject to its own open-font licence.
