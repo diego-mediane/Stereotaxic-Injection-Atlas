@@ -133,7 +133,7 @@ The default **Presentation sweep** is designed for labelled injection sites. It:
 
 Users can also adjust the background colour, output size, duration, frame rate, camera path, brain opacity, region opacity, labels and captions.
 
-Every exported file contains:
+
 
 ```text
 github.com/diego-mediane/Stereotaxic-Injection-Atlas
