@@ -1,51 +1,50 @@
 # Stereotaxic Injection Atlas
 
-### Interactive stereotaxic planning, Allen CCF visualisation and presentation export
-
-Diego Hassan Mediane · 2026  
-University of Bristol
+Interactive mouse-brain stereotaxic planning with Allen CCFv3 visualisation, genuine 2D atlas sections, optional tilt correction and presentation export.
 
 <p align="center">
   <a href="https://diego-mediane.github.io/Stereotaxic-Injection-Atlas/">
-    <img src="assets/launch_atlas.svg" alt="Launch Stereotaxic Injection Atlas" width="760">
+    <img src="assets/launch_atlas.svg" alt="Open the Stereotaxic Injection Atlas" width="760">
   </a>
 </p>
 
-<p align="center"><strong>Press the button to open the fully functional atlas.</strong></p>
+<h2 align="center">
+  <a href="https://diego-mediane.github.io/Stereotaxic-Injection-Atlas/">CLICK HERE TO START</a>
+</h2>
 
-The Stereotaxic Injection Atlas is a browser-based tool for plotting mouse-brain injection targets in bregma-relative coordinates. It combines an interactive Allen CCFv3 brain, genuine voxel-based coronal and sagittal sections, optional rig-tilt correction and presentation-ready media export.
+<p align="center">
+  The atlas opens directly in your browser. No installation or download is required.
+</p>
 
-## What the atlas can do
-
-- plot one or more labelled injection sites using AP, ML and DV coordinates;
-- display injection tips and needle trajectories in the 3D reference brain;
-- identify the Allen structure containing the active 2D target;
-- show or hide 259 structures using Allen ontology colours;
-- display genuine Allen CCF 2017 coronal and sagittal sections;
-- inspect voxel-level annotations by moving the pointer over a 2D section;
-- apply optional stereotaxic rig-tilt correction from measured skull landmarks;
-- compare planned and uncorrected trajectories;
-- export presentation videos, animated GIFs and PNG images;
-- add coordinate captions, multi-site region highlighting and permanent repository attribution to exported media.
-
-The 2D atlas is loaded only when requested. Sections retain their anatomical aspect ratio and are letterboxed rather than stretched.
+---
 
 ## Quick start
 
-1. Open the atlas using the launch button above.
-2. In **Targets**, enter a name and the AP, ML and DV coordinates for the injection.
-3. Add further targets with **Add target** when required.
-4. Mark one row as **2D active**. The coronal and sagittal atlas follow this target.
-5. Tick **Include in export** for every site that should appear in the video, GIF or PNG.
-6. Use the mouse or trackpad to rotate, pan and zoom the 3D brain.
-7. Open **Brain structures** and select any additional regions that should be highlighted.
-8. Enable **Voxel-based 2D atlas** to inspect the nearest coronal and sagittal planes.
-9. Enable **Stereotaxic adjustment** only when landmark measurements are available.
-10. Open **Export presentation media** to save a video, GIF or PNG.
+Most users only need these steps:
+
+1. Click **CLICK HERE TO START** above.
+2. Enter a site name and the AP, ML and DV coordinates under **Targets**.
+3. Add more targets when needed.
+4. Choose one target as **2D active** if you want to inspect coronal and sagittal atlas sections.
+5. Tick **Include in export** for every target that should appear in a video, GIF or PNG.
+6. Rotate, pan and zoom the 3D brain using the mouse, trackpad or touchscreen.
+
+The viewer updates immediately as coordinates are entered.
+
+## What the atlas does
+
+- Plots one or more labelled stereotaxic targets in a 3D Allen CCFv3 mouse brain.
+- Displays injection tips and needle trajectories.
+- Identifies the Allen structure containing the active target.
+- Provides genuine voxel-based coronal and sagittal Allen CCF 2017 sections.
+- Allows individual brain structures or complete anatomical divisions to be highlighted.
+- Supports optional correction for stereotaxic rig tilt.
+- Exports presentation-ready video, animated GIF and PNG files.
+- Adds permanent repository attribution to exported media.
 
 ## Coordinate convention
 
-Coordinates are entered in millimetres relative to bregma:
+Coordinates are entered in millimetres relative to bregma.
 
 | Axis | Convention |
 |---|---|
@@ -53,123 +52,120 @@ Coordinates are entered in millimetres relative to bregma:
 | ML | left positive, right negative |
 | DV | ventral targets negative |
 
-The advanced atlas-fit values define how bregma and the midline are mapped into CCF space. These controls should normally be left at their defaults.
+The advanced atlas-fit values should normally remain at their defaults.
 
-## Plotting injection sites
+## Adding and selecting targets
 
 Each target row contains:
 
-- **Site**: a short label, such as `PAG`, `PL` or `BLA`;
-- **AP**: anteroposterior coordinate;
-- **ML**: mediolateral coordinate;
+- **Site**: a short label such as `PAG`, `PL` or `BLA`.
+- **AP**: anteroposterior coordinate.
+- **ML**: mediolateral coordinate.
 - **DV**: dorsoventral coordinate.
 
-Every valid target is shown with a coloured tip, a vertical needle trajectory and a label. The information card reports the entered coordinates and the smallest listed Allen structure containing the active target tip.
+Every valid target is displayed with a coloured tip, a needle trajectory and a label.
 
-Each target row has two independent controls:
+Each target has two separate controls:
 
-- **2D active** selects the single target used by the coordinate readout and the coronal and sagittal atlas. Clicking inside a target row also makes it active.
-- **Include in export** determines whether that target, its trajectory and its label appear in exported media. Any number of valid targets can be included.
+- **2D active** selects the single target followed by the coordinate readout and the coronal and sagittal atlas. Clicking anywhere inside a target row also makes it active.
+- **Include in export** selects every target that should appear in exported media. Any number of valid targets can be included.
 
-This separation allows one target to drive the 2D atlas while a presentation animation shows two or more injection sites simultaneously.
+This means the 2D atlas can follow one target while a video or image shows several injection sites at the same time.
 
-## Highlighting brain structures
+## Viewing brain structures
 
-Open **Brain structures** to search the Allen ontology.
+Open **Brain structures** to search or browse the Allen ontology.
 
-- Click a division name to expand it.
-- Click an individual structure to show or hide it.
-- Click the square beside a major division to toggle every listed structure in that division.
+- Select an individual structure to show or hide it.
+- Expand a major division to browse its structures.
+- Select the square beside a division to toggle the whole group.
 - Use **Hide all structures** to clear the current selection.
 
-Structure colours follow the Allen ontology. The opacity used in exported media can be set independently in the export panel.
+Displayed colours follow the Allen ontology. Structure opacity can be adjusted separately for exported media.
 
 ## Using the 2D atlas
 
-Enable **Show genuine coronal and sagittal sections** under **Voxel-based 2D atlas**.
+1. Select one target as **2D active**.
+2. Open **Voxel-based 2D atlas**.
+3. Enable **Show genuine coronal and sagittal sections**.
 
-The viewer then loads the locally hosted 50 µm Allen CCF 2017 template and annotation volumes. The coronal plane follows the AP coordinate of the **2D active** target and the sagittal plane follows its ML coordinate.
+The coronal view follows the target's AP coordinate. The sagittal view follows its ML coordinate. The nearest available 50 µm atlas plane is shown without stretching.
 
-The section header reports the nearest stored plane. Move the pointer over either section to inspect:
+Move the pointer over either section to inspect:
 
 - the anatomical structure;
-- the structure acronym;
-- the AP, ML and DV coordinates at that voxel.
+- its acronym and full name;
+- the AP, ML and DV coordinates of that voxel.
 
-The annotation fill can be hidden or made more transparent without changing the underlying template image.
+Annotation colours and transparency can be adjusted without changing the underlying reference image.
 
 ## Optional stereotaxic adjustment
 
-Rig correction is off by default. Enable it only when bregma, lambda and bilateral skull landmarks have been measured using the same stereotaxic manipulator.
+Rig correction is disabled by default. Use it only when skull landmarks have been measured with the same stereotaxic manipulator.
 
 1. Zero the manipulator at bregma.
-2. Enter the AP, ML and DV readings at lambda.
-3. Enter the corresponding readings at the left and right landmarks.
+2. Enter the readings measured at lambda.
+3. Enter the left and right landmark readings.
 4. Review the calculated pitch, roll and total tilt.
-5. Enable the uncorrected ghost trajectory to visualise the estimated displacement.
+5. Show the uncorrected ghost trajectory to visualise the estimated displacement.
 
-The correction is a geometric aid. It does not account for individual anatomy, tissue deformation, injection spread or experimental error.
+The correction is a geometric aid. It does not replace pilot injections, local surgical procedures or histological verification.
 
-## Exporting presentation media
+## Exporting videos, GIFs and images
 
-Open **Export presentation media**, then choose one of the following formats:
+Open **Export presentation media** after entering at least one valid target.
 
-- **Video**: records the animation using the best supported browser format, normally WebM and, where available, MP4;
-- **Animated GIF**: produces a looping, presentation-friendly animation at a reduced resolution and frame rate;
-- **PNG image**: saves a single high-resolution frame.
+Available formats:
 
-### Presentation sweep template
+- **Video** for smooth presentation playback and better colour fidelity.
+- **Animated GIF** for convenient looping in slides and documents.
+- **PNG** for a high-resolution still image.
 
-The default template is intended for labelled injection sites in talks, posters and lab meetings. It:
+The default **Presentation sweep** is designed for labelled injection sites. It:
 
-- includes every valid target marked **Include in export**;
-- centres the camera towards the geometric centre of the included targets;
-- highlights the Allen structures containing the included injection tips;
-- shows each included injection trajectory and label;
-- moves through a sequence of oblique, lateral, dorsal and frontal views;
-- adds the included coordinates and anatomical regions as a caption;
-- adds permanent repository attribution in the lower-right corner.
+- includes all targets marked **Include in export**;
+- centres the camera on the included sites;
+- highlights the Allen structures containing the target tips;
+- displays each trajectory and label;
+- moves through several useful 3D viewpoints;
+- adds coordinates and anatomical information;
+- adds permanent repository attribution.
 
-### Export controls
+Users can also adjust the background colour, output size, duration, frame rate, camera path, brain opacity, region opacity, labels and captions.
 
-Users can adjust:
-
-- which valid targets are included;
-- background colour;
-- output resolution;
-- duration and frame rate;
-- camera path;
-- custom camera-view sequence;
-- whole-brain opacity;
-- highlighted-region opacity;
-- automatic highlighting of structures at the included target tips;
-- inclusion of structures already visible in the 3D viewer;
-- centring on the included targets;
-- coordinate caption and scene labels.
-
-Every exported video, GIF and PNG contains the following permanent attribution:
+Every exported file contains:
 
 ```text
 github.com/diego-mediane/Stereotaxic-Injection-Atlas
 ```
 
-The attribution is fixed in the application and cannot be disabled or edited through the export controls.
+For most presentations, video is preferable to GIF because it produces smoother movement, more accurate colours and a smaller file.
 
-GIF encoding is more computationally intensive than video recording. For most presentations, video gives smoother motion, better colour fidelity and a smaller file.
-
-## Mouse, trackpad and touch controls
+## Navigation controls
 
 | Action | Control |
 |---|---|
 | Rotate | left-drag or one-finger drag |
 | Pan | right-drag or two-finger drag |
-| Zoom | mouse wheel or two-finger pinch |
-| Preset view | use the view controls at the lower right |
-| Reset | select **Reset 3D view** |
+| Zoom | mouse wheel or pinch |
+| Preset view | use the controls at the lower right |
+| Reset view | select **Reset 3D view** |
+
+## Intended use
+
+The atlas is designed for:
+
+- pre-surgical planning;
+- communication of injection coordinates;
+- teaching and training;
+- preparation of figures, presentations and lab-meeting material;
+- visual comparison of planned targets.
+
+It is a planning and visualisation aid, not a substitute for experimental verification. The Allen CCF is a population reference and cannot reproduce the anatomy of an individual animal. Final placement should be verified using appropriate histology and experimental controls.
 
 ## Scientific basis
 
-The application uses the Allen Mouse Brain Common Coordinate Framework v3 and the Allen CCF 2017 structure ontology. The optional 2D viewer is generated from the actual template and voxel-annotation volumes rather than projected surface geometry.
+The application uses the Allen Mouse Brain Common Coordinate Framework v3 and the Allen CCF 2017 structure ontology. The 2D viewer is generated from the genuine template and voxel-annotation volumes rather than from projected surface geometry.
 
 Key references:
 
@@ -178,28 +174,20 @@ Key references:
 3. Cecyn MN, Abrahao KP. Where do you measure the Bregma for rodent stereotaxic surgery? *IBRO Neuroscience Reports*. 2023;15:143–148. doi:10.1016/j.ibneur.2023.07.003.
 4. cortex-lab/allenCCF and the Modified Allen CCF 2017 dataset. doi:10.6084/m9.figshare.25365829.
 
-## Intended use and limitations
+<details>
+<summary><strong>Local use and development</strong></summary>
 
-This application is a planning, communication and visualisation aid. The CCF is a population reference and does not reproduce the anatomy of an individual animal. Displayed coordinates and region assignments do not replace:
-
-- pilot injections;
-- local surgical procedures;
-- brain-surface depth checks;
-- experimental controls;
-- post-operative histology;
-- verification of viral expression or injection spread.
-
-An exported image or animation represents the planned target, not a measured injection volume.
-
-## Local use
-
-The 3D viewer can open directly from `index.html`. The voxel-based 2D atlas uses browser `fetch()` requests and therefore requires a local web server:
+The 3D viewer can open directly from `index.html`. The voxel-based 2D atlas requires a local web server because it loads atlas files using browser `fetch()` requests.
 
 ```bash
 python3 -m http.server 8000
 ```
 
-Open `http://localhost:8000/` in a browser.
+Then open:
+
+```text
+http://localhost:8000/
+```
 
 To build the atlas files locally:
 
@@ -216,7 +204,10 @@ Windows PowerShell activation:
 .venv\Scripts\Activate.ps1
 ```
 
-## Repository structure
+</details>
+
+<details>
+<summary><strong>Repository structure</strong></summary>
 
 ```text
 Stereotaxic-Injection-Atlas/
@@ -233,7 +224,9 @@ Stereotaxic-Injection-Atlas/
 └── .github/workflows/
 ```
 
-The GitHub Actions workflow downloads the official Allen 50 µm volumes, builds the browser-ready atlas, installs the GIF encoder used by the export module and deploys the completed site to GitHub Pages.
+The GitHub Actions workflow downloads the official Allen 50 µm volumes, builds the browser-ready atlas, installs the GIF encoder and deploys the completed site to GitHub Pages.
+
+</details>
 
 ## Citation
 
@@ -241,8 +234,15 @@ The GitHub Actions workflow downloads the official Allen 50 µm volumes, builds 
 Mediane, D. H. (2026). Stereotaxic Injection Atlas [Computer software]. GitHub. https://github.com/diego-mediane/Stereotaxic-Injection-Atlas
 ```
 
-Citation metadata are also provided in `CITATION.cff`.
+Citation metadata are also available in `CITATION.cff`.
 
 ## Licence
 
 Application code is released under the MIT Licence. Allen atlas data and other third-party materials remain subject to their original terms. See `THIRD_PARTY_NOTICES.md`.
+
+---
+
+<p align="center">
+  <strong>Ready to use the atlas?</strong><br><br>
+  <a href="https://diego-mediane.github.io/Stereotaxic-Injection-Atlas/"><strong>CLICK HERE TO START</strong></a>
+</p>
