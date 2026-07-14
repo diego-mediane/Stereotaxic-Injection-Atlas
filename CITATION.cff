@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the metadata below."
+title: "Stereotaxic Injection Atlas"
+type: software
+authors:
+  - family-names: Mediane
+    given-names: Diego Hassan
+year: 2026
+repository-code: "https://github.com/diego-mediane/Stereotaxic-Injection-Atlas"
+url: "https://diego-mediane.github.io/Stereotaxic-Injection-Atlas/"
+license: MIT
+keywords:
+  - stereotaxic surgery
+  - Allen CCF
+  - mouse brain atlas
+  - neuroanatomy
+  - neuroscience
+references:
+  - type: article
+    authors:
+      - family-names: Wang
+        given-names: Quanxin
+    title: "The Allen Mouse Brain Common Coordinate Framework: A 3D Reference Atlas"
+    journal: Cell
+    year: 2020
+    doi: "10.1016/j.cell.2020.04.007"
