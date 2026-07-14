@@ -207,12 +207,29 @@ def orient_volume(volume: np.ndarray, resolution_um: int, label: str) -> np.ndar
     expected = EXPECTED_SHAPES.get(resolution_um)
     if expected is None:
         return volume
-    if tuple(volume.shape) == expected:
+
+    shape = tuple(int(value) for value in volume.shape)
+    if shape == expected:
         return volume
-    if tuple(volume.shape) == (expected[1], expected[0], expected[2]):
-        print(f"Transposing the first two axes of {label} into [AP, DV, ML] order.")
-        return np.transpose(volume, (1, 0, 2))
-    raise ValueError(f"{label} shape {volume.shape} does not match expected {expected} for {resolution_um} µm")
+
+    # Official Allen NRRD files can be returned by pynrrd in a different
+    # axis order from the viewer's required [AP, DV, ML] convention.
+    # All configured atlas dimensions are unique, so the required
+    # permutation can be identified safely from the shape.
+    if sorted(shape) == sorted(expected) and len(set(expected)) == 3:
+        axes = tuple(shape.index(size) for size in expected)
+        print(
+            f"Transposing {label} from shape {shape} to {expected} "
+            f"in [AP, DV, ML] order using axes {axes}."
+        )
+        oriented = np.transpose(volume, axes)
+        if tuple(oriented.shape) == expected:
+            return oriented
+
+    raise ValueError(
+        f"{label} shape {volume.shape} does not match expected "
+        f"{expected} for {resolution_um} µm"
+    )
 
 
 def clean_hex(value: str) -> str:
