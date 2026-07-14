@@ -19,14 +19,14 @@ The Stereotaxic Injection Atlas is a browser-based tool for plotting mouse-brain
 
 - plot one or more labelled injection sites using AP, ML and DV coordinates;
 - display injection tips and needle trajectories in the 3D reference brain;
-- identify the Allen structure containing the selected target;
+- identify the Allen structure containing the active 2D target;
 - show or hide 259 structures using Allen ontology colours;
 - display genuine Allen CCF 2017 coronal and sagittal sections;
 - inspect voxel-level annotations by moving the pointer over a 2D section;
 - apply optional stereotaxic rig-tilt correction from measured skull landmarks;
 - compare planned and uncorrected trajectories;
 - export presentation videos, animated GIFs and PNG images;
-- add coordinate captions, target-region highlighting and a repository watermark to exported media.
+- add coordinate captions, multi-site region highlighting and permanent repository attribution to exported media.
 
 The 2D atlas is loaded only when requested. Sections retain their anatomical aspect ratio and are letterboxed rather than stretched.
 
@@ -35,11 +35,13 @@ The 2D atlas is loaded only when requested. Sections retain their anatomical asp
 1. Open the atlas using the launch button above.
 2. In **Targets**, enter a name and the AP, ML and DV coordinates for the injection.
 3. Add further targets with **Add target** when required.
-4. Use the mouse or trackpad to rotate, pan and zoom the 3D brain.
-5. Open **Brain structures** and select any regions that should be highlighted.
-6. Enable **Voxel-based 2D atlas** to inspect the nearest coronal and sagittal planes.
-7. Enable **Stereotaxic adjustment** only when landmark measurements are available.
-8. Open **Export presentation media** to save a video, GIF or PNG.
+4. Mark one row as **2D active**. The coronal and sagittal atlas follow this target.
+5. Tick **Include in export** for every site that should appear in the video, GIF or PNG.
+6. Use the mouse or trackpad to rotate, pan and zoom the 3D brain.
+7. Open **Brain structures** and select any additional regions that should be highlighted.
+8. Enable **Voxel-based 2D atlas** to inspect the nearest coronal and sagittal planes.
+9. Enable **Stereotaxic adjustment** only when landmark measurements are available.
+10. Open **Export presentation media** to save a video, GIF or PNG.
 
 ## Coordinate convention
 
@@ -62,9 +64,14 @@ Each target row contains:
 - **ML**: mediolateral coordinate;
 - **DV**: dorsoventral coordinate.
 
-The selected target is shown with a coloured tip, a vertical needle trajectory and a label. The information card reports the entered coordinates and the smallest listed Allen structure containing the tip.
+Every valid target is shown with a coloured tip, a vertical needle trajectory and a label. The information card reports the entered coordinates and the smallest listed Allen structure containing the active target tip.
 
-Multiple targets can be displayed simultaneously. Select a row by clicking inside it. The 2D atlas and export caption follow the currently selected target.
+Each target row has two independent controls:
+
+- **2D active** selects the single target used by the coordinate readout and the coronal and sagittal atlas. Clicking inside a target row also makes it active.
+- **Include in export** determines whether that target, its trajectory and its label appear in exported media. Any number of valid targets can be included.
+
+This separation allows one target to drive the 2D atlas while a presentation animation shows two or more injection sites simultaneously.
 
 ## Highlighting brain structures
 
@@ -81,7 +88,7 @@ Structure colours follow the Allen ontology. The opacity used in exported media 
 
 Enable **Show genuine coronal and sagittal sections** under **Voxel-based 2D atlas**.
 
-The viewer then loads the locally hosted 50 µm Allen CCF 2017 template and annotation volumes. The coronal plane follows the selected AP coordinate and the sagittal plane follows the selected ML coordinate.
+The viewer then loads the locally hosted 50 µm Allen CCF 2017 template and annotation volumes. The coronal plane follows the AP coordinate of the **2D active** target and the sagittal plane follows its ML coordinate.
 
 The section header reports the nearest stored plane. Move the pointer over either section to inspect:
 
@@ -115,17 +122,19 @@ Open **Export presentation media**, then choose one of the following formats:
 
 The default template is intended for labelled injection sites in talks, posters and lab meetings. It:
 
-- centres the camera towards the selected target;
-- highlights the Allen structure containing the selected injection tip;
-- shows the injection trajectory and target label;
+- includes every valid target marked **Include in export**;
+- centres the camera towards the geometric centre of the included targets;
+- highlights the Allen structures containing the included injection tips;
+- shows each included injection trajectory and label;
 - moves through a sequence of oblique, lateral, dorsal and frontal views;
-- adds the selected coordinates and anatomical region as a caption;
-- adds a subtle repository watermark.
+- adds the included coordinates and anatomical regions as a caption;
+- adds permanent repository attribution in the lower-right corner.
 
 ### Export controls
 
 Users can adjust:
 
+- which valid targets are included;
 - background colour;
 - output resolution;
 - duration and frame rate;
@@ -133,17 +142,18 @@ Users can adjust:
 - custom camera-view sequence;
 - whole-brain opacity;
 - highlighted-region opacity;
-- automatic target-region highlighting;
+- automatic highlighting of structures at the included target tips;
 - inclusion of structures already visible in the 3D viewer;
-- target centring;
-- coordinate caption;
-- watermark text, position and opacity.
+- centring on the included targets;
+- coordinate caption and scene labels.
 
-The watermark defaults to:
+Every exported video, GIF and PNG contains the following permanent attribution:
 
 ```text
-https://github.com/diego-mediane/Stereotaxic-Injection-Atlas
+github.com/diego-mediane/Stereotaxic-Injection-Atlas
 ```
+
+The attribution is fixed in the application and cannot be disabled or edited through the export controls.
 
 GIF encoding is more computationally intensive than video recording. For most presentations, video gives smoother motion, better colour fidelity and a smaller file.
 
